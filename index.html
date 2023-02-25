@@ -16,14 +16,14 @@
             // Calculate Roth IRA after-tax return
             var roth_ira = [annual_contribution];
             for (var i = 1; i < years; i++) {
-                roth_ira[i] = (roth_ira[i-1] + annual_contribution) * (1 + annual_return + dividend_yield);
+                roth_ira[i] = (roth_ira[i-1]) * (1 + annual_return + dividend_yield) + annual_contribution;
             }
             var roth_ira_after_tax = roth_ira[years-1];
 
             // Calculate taxable brokerage account after-tax return
             var taxable_brokerage = [annual_contribution];
             for (var i = 1; i < years; i++) {
-                taxable_brokerage[i] = (taxable_brokerage[i-1] + annual_contribution) * (1 + annual_return);
+                taxable_brokerage[i] = (taxable_brokerage[i-1] ) * (1 + annual_return) + annual_contribution;
                 var taxable_brokerage_dividend = taxable_brokerage[i-1] * dividend_yield;
                 var taxable_brokerage_dividend_tax = taxable_brokerage_dividend * income_tax_rate;
                 taxable_brokerage[i] = taxable_brokerage[i] + taxable_brokerage_dividend - taxable_brokerage_dividend_tax;
@@ -62,7 +62,7 @@
         <input type="number" id="years" value="30"><br><br>
 
         <label>Annual Contribution:</label>
-        <input type="number" id
+        <input type="number" id="annual_contribution"step="100" value="5000"><br><br>
         <label>Annual Return Rate:</label>
         <input type="number" id="annual_return" step="0.01" value="0.07"><br><br>
 
